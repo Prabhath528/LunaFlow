@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <!-- PWA Install Manager — must be FIRST to capture beforeinstallprompt -->
+    <script src="./pwa-install.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover" />
 
@@ -2867,10 +2869,6 @@
 
     <!-- TOAST -->
     <div class="toast" id="toast" role="alert" aria-live="polite"></div>
-
-    <!-- ██ PWA INSTALL MANAGER ██ -->
-    <!-- Must load BEFORE the app's init() so beforeinstallprompt is never missed -->
-    <script src="./pwa-install.js"></script>
 
     <script>
         // ── PWA Service Worker ──────────────────────────────
