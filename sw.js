@@ -1,17 +1,19 @@
-const CACHE_NAME = 'lunaflow-v1';
+const CACHE_NAME = 'lunaflow-v2';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
+  './pwa-install.js',
   './icons/icon-192x192.png',
   './icons/icon-512x512.png',
-  'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap'
+  'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap',
+  'https://fonts.googleapis.com/icon?family=Material+Icons+Round'
 ];
 
 self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(ASSETS).catch(err => console.log('Cache partial fail:', err));
+      return cache.addAll(ASSETS).catch(err => console.log('[SW] Partial cache fail:', err));
     }).then(() => self.skipWaiting())
   );
 });
