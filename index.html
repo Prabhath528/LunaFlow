@@ -1,0 +1,3332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#E91E8C" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>LunaFlow</title>
+    <link rel="icon" type="image/jpge" href="./Logol.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" />
+
+    <!-- Google Material Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <style>
+        :root {
+            --rose: #E91E8C;
+            --rose2: #C2185B;
+            --rose3: #FF4DA6;
+            --rose-pale: #FFF0F7;
+            --rose-light: #FCE4EC;
+            --plum: #7B2D8B;
+            --plum2: #9C27B0;
+            --sage: #26A69A;
+            --gold: #F9A825;
+            --sky: #29B6F6;
+            --text: #1A0A1E;
+            --text2: #5C2D6E;
+            --text3: #A07AB0;
+            --white: #FFFFFF;
+            --bg: #FBF4FD;
+            --card: #FFFFFF;
+            --r: 22px;
+            --shadow: 0 8px 40px rgba(233, 30, 140, .13);
+            --shadow2: 0 2px 16px rgba(123, 45, 139, .10);
+            --st: env(safe-area-inset-top, 0px);
+            --sb: env(safe-area-inset-bottom, 0px);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            height: 100%;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            min-height: 100dvh;
+            overflow-x: hidden;
+        }
+
+        .material-icons-round,
+        .material-symbols-rounded {
+            vertical-align: middle;
+            user-select: none;
+        }
+
+        /* ── SCREENS ── */
+        .screen {
+            display: none;
+            flex-direction: column;
+            min-height: 100vh;
+            min-height: 100dvh;
+            animation: fadeUp .42s cubic-bezier(.22, .61, .36, 1);
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(22px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        /* ── BUTTONS ── */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--rose), var(--plum2));
+            color: #fff;
+            border: none;
+            padding: 17px 40px;
+            border-radius: 100px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(233, 30, 140, .40);
+            transition: all .22s;
+            letter-spacing: .2px;
+            width: 100%;
+            touch-action: manipulation;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary:active {
+            transform: scale(.97);
+            opacity: .92;
+        }
+
+        .btn-ghost {
+            background: var(--white);
+            color: var(--rose2);
+            border: 2px solid #F3C6E0;
+            padding: 15px 40px;
+            border-radius: 100px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all .2s;
+            touch-action: manipulation;
+        }
+
+        .btn-ghost:active {
+            background: var(--rose-light);
+        }
+
+        .back-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--white);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow2);
+            color: var(--rose2);
+            flex-shrink: 0;
+            touch-action: manipulation;
+            font-size: 20px;
+        }
+
+        .back-btn:active {
+            transform: scale(.92);
+        }
+
+        /* ── WELCOME ── */
+        #s-welcome {
+            background: linear-gradient(170deg, #1A0A1E 0%, #2D0A3A 45%, #4A0E5C 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .welcome-hero-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 65%;
+            object-fit: cover;
+            object-position: center top;
+            opacity: .22;
+            mix-blend-mode: luminosity;
+        }
+
+        .welcome-gradient-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 75%;
+            background: linear-gradient(to top, #1A0A1E 40%, #1A0A1E99 70%, transparent 100%);
+        }
+
+        .welcome-mesh {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 65%;
+            background: radial-gradient(ellipse at 30% 40%, rgba(233, 30, 140, .35) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 20%, rgba(123, 45, 139, .4) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 60%, rgba(255, 77, 166, .2) 0%, transparent 50%);
+        }
+
+        .welcome-moon-icon {
+            position: absolute;
+            top: calc(10% + var(--st));
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(220px, 60vw);
+            height: min(220px, 60vw);
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .moon-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(145deg, rgba(255, 77, 166, .25), rgba(123, 45, 139, .3));
+            border: 1.5px solid rgba(255, 77, 166, .35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: moonPulse 4s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .moon-circle::before {
+            content: '';
+            position: absolute;
+            inset: 12px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, rgba(233, 30, 140, .3), rgba(156, 39, 176, .35));
+            border: 1px solid rgba(255, 255, 255, .15);
+        }
+
+        .moon-img {
+            width: 65%;
+            height: 65%;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 40px rgba(233, 30, 140, .6), 0 0 80px rgba(233, 30, 140, .3);
+        }
+
+        @keyframes moonPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 40px rgba(233, 30, 140, .3), 0 0 80px rgba(233, 30, 140, .15)
+            }
+
+            50% {
+                box-shadow: 0 0 60px rgba(233, 30, 140, .5), 0 0 120px rgba(233, 30, 140, .25)
+            }
+        }
+
+        .float-pill {
+            position: absolute;
+            background: rgba(255, 255, 255, .1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-radius: 100px;
+            padding: 8px 14px;
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, .9);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 3;
+            animation: floatAnim 3.5s ease-in-out infinite;
+        }
+
+        @keyframes floatAnim {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-7px)
+            }
+        }
+
+        .float-pill.p1 {
+            top: calc(20% + var(--st));
+            right: 8%;
+            animation-delay: 0s;
+        }
+
+        .float-pill.p2 {
+            top: calc(38% + var(--st));
+            left: 5%;
+            animation-delay: .9s;
+        }
+
+        .float-pill.p3 {
+            top: calc(55%);
+            right: 6%;
+            animation-delay: 1.7s;
+        }
+
+        .float-pill .pdot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .welcome-bottom {
+            position: relative;
+            z-index: 4;
+            margin-top: auto;
+            padding: 0 28px calc(52px + var(--sb));
+        }
+
+        .welcome-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(233, 30, 140, .2);
+            border: 1px solid rgba(233, 30, 140, .4);
+            border-radius: 100px;
+            padding: 6px 14px;
+            margin-bottom: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #FF88CC;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+        }
+
+        .welcome-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(36px, 10vw, 52px);
+            font-weight: 300;
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 14px;
+            letter-spacing: -.5px;
+        }
+
+        .welcome-title strong {
+            font-weight: 700;
+        }
+
+        .welcome-title em {
+            color: var(--rose3);
+            font-style: italic;
+        }
+
+        .welcome-sub {
+            font-size: 14px;
+            color: rgba(255, 255, 255, .55);
+            line-height: 1.75;
+            margin-bottom: 28px;
+            font-weight: 400;
+        }
+
+        .trust-chips {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .trust-chip {
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .15);
+            border-radius: 100px;
+            padding: 6px 14px;
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, .75);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .trust-chip .material-icons-round {
+            font-size: 13px;
+            color: var(--rose3);
+        }
+
+        .btn-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .welcome-foot {
+            text-align: center;
+            font-size: 11px;
+            color: rgba(255, 255, 255, .3);
+            margin-top: 16px;
+        }
+
+        /* ── OB SHELL ── */
+        .ob-shell {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 520px;
+            width: 100%;
+            margin: 0 auto;
+            padding: calc(24px + var(--st)) 24px calc(36px + var(--sb));
+        }
+
+        .ob-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .ob-step-pill {
+            background: var(--rose-light);
+            border-radius: 100px;
+            padding: 5px 14px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--rose2);
+            letter-spacing: .8px;
+            text-transform: uppercase;
+        }
+
+        .progress-dots {
+            display: flex;
+            gap: 6px;
+            margin-left: auto;
+        }
+
+        .pdot {
+            width: 8px;
+            height: 8px;
+            border-radius: 100px;
+            background: var(--rose-light);
+            transition: all .3s;
+        }
+
+        .pdot.done {
+            background: var(--rose);
+            width: 24px;
+        }
+
+        .screen-h {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(26px, 7vw, 34px);
+            font-weight: 600;
+            margin-bottom: 6px;
+            line-height: 1.1;
+            letter-spacing: -.3px;
+        }
+
+        .screen-p {
+            font-size: 14px;
+            color: var(--text3);
+            line-height: 1.7;
+            margin-bottom: 24px;
+            font-weight: 400;
+        }
+
+        /* ── ONBOARD ILLUS BANNER ── */
+        .ob-banner {
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 22px;
+            position: relative;
+            height: 140px;
+            background: linear-gradient(135deg, #FCE4EC, #EDE7F6);
+        }
+
+        .ob-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: .7;
+        }
+
+        .ob-banner-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(to right, rgba(252, 228, 236, .9) 40%, transparent 100%);
+        }
+
+        .ob-banner-text .title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .ob-banner-text .sub {
+            font-size: 12px;
+            color: var(--text2);
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* ── INPUTS ── */
+        .inp-group {
+            margin-bottom: 18px;
+        }
+
+        .inp-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text2);
+            margin-bottom: 8px;
+            display: block;
+            letter-spacing: .8px;
+            text-transform: uppercase;
+        }
+
+        .inp-wrap {
+            position: relative;
+        }
+
+        .inp-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text3);
+            pointer-events: none;
+            font-size: 20px;
+        }
+
+        .inp-field {
+            width: 100%;
+            padding: 15px 16px 15px 48px;
+            border: 1.5px solid #EDD5EC;
+            border-radius: 14px;
+            font-size: 15px;
+            background: white;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            outline: none;
+            transition: all .2s;
+            -webkit-appearance: none;
+        }
+
+        .inp-field:focus {
+            border-color: var(--rose);
+            box-shadow: 0 0 0 4px rgba(233, 30, 140, .08);
+        }
+
+        .inp-field::placeholder {
+            color: var(--text3);
+        }
+
+        .inp-field.no-icon {
+            padding-left: 16px;
+        }
+
+        /* Stepper */
+        .stepper {
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 1.5px solid #EDD5EC;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .stepper-btn {
+            width: 54px;
+            height: 54px;
+            border: none;
+            background: var(--rose-pale);
+            color: var(--rose2);
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            transition: background .15s;
+            flex-shrink: 0;
+        }
+
+        .stepper-btn:active {
+            background: var(--rose-light);
+        }
+
+        .stepper-val {
+            flex: 1;
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .stepper-unit {
+            font-size: 11px;
+            color: var(--text3);
+            font-weight: 600;
+            text-align: center;
+            margin-top: 2px;
+        }
+
+        /* ── OTP ── */
+        .otp-card {
+            background: linear-gradient(135deg, var(--rose), var(--plum2));
+            border-radius: 22px;
+            padding: 28px;
+            text-align: center;
+            margin: 12px 0 20px;
+            box-shadow: 0 14px 50px rgba(233, 30, 140, .35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .otp-card::before {
+            content: '';
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .08);
+            top: -50px;
+            right: -50px;
+        }
+
+        .otp-card::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .06);
+            bottom: -20px;
+            left: 20px;
+        }
+
+        .otp-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, .7);
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .otp-code {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(42px, 11vw, 60px);
+            font-weight: 700;
+            color: white;
+            letter-spacing: 16px;
+        }
+
+        .otp-boxes {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 16px 0;
+        }
+
+        .otp-box {
+            width: clamp(56px, 14vw, 66px);
+            height: clamp(62px, 15vw, 70px);
+            border: 1.5px solid #EDD5EC;
+            border-radius: 16px;
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            background: white;
+            color: var(--rose2);
+            outline: none;
+            font-family: 'Cormorant Garamond', serif;
+            transition: all .2s;
+            -webkit-appearance: none;
+        }
+
+        .otp-box:focus {
+            border-color: var(--rose);
+            box-shadow: 0 0 0 4px rgba(233, 30, 140, .12);
+        }
+
+        /* ── MINI CALENDAR ── */
+        .mini-cal {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: var(--shadow2);
+        }
+
+        .cal-hdr {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .cal-month {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .cal-nav {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--rose-pale);
+            border: none;
+            cursor: pointer;
+            color: var(--rose2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .15s;
+            touch-action: manipulation;
+            font-size: 18px;
+        }
+
+        .cal-nav:hover {
+            background: var(--rose-light);
+        }
+
+        .cal-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 3px;
+            text-align: center;
+        }
+
+        .cal-dn {
+            font-size: 10px;
+            color: var(--text3);
+            font-weight: 700;
+            padding: 4px 0;
+            letter-spacing: .4px;
+        }
+
+        .cal-day {
+            aspect-ratio: 1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(11px, 3vw, 13px);
+            cursor: pointer;
+            margin: 0 auto;
+            transition: all .15s;
+            color: var(--text);
+            width: 100%;
+            max-width: 38px;
+            font-weight: 500;
+            touch-action: manipulation;
+        }
+
+        .cal-day:hover {
+            background: var(--rose-light);
+            color: var(--rose2);
+        }
+
+        .cal-day.selected {
+            background: linear-gradient(135deg, var(--rose), var(--plum2));
+            color: white;
+            box-shadow: 0 4px 14px rgba(233, 30, 140, .4);
+        }
+
+        .cal-day.today {
+            border: 2px solid var(--rose);
+            color: var(--rose2);
+            font-weight: 700;
+        }
+
+        .cal-day.other {
+            color: var(--text3);
+            opacity: .35;
+        }
+
+        .cal-day.period {
+            background: #FCE4EC;
+            color: #C2185B;
+            font-weight: 700;
+        }
+
+        .cal-day.fertile {
+            background: #E0F2F1;
+            color: #00695C;
+        }
+
+        .cal-day.ovulation {
+            background: #FFF9C4;
+            color: #F57F17;
+        }
+
+        /* ── PIN ── */
+        .pin-dots {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .pin-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2.5px solid var(--rose);
+            transition: all .22s;
+        }
+
+        .pin-dot.filled {
+            background: var(--rose2);
+            border-color: var(--rose2);
+            transform: scale(1.12);
+        }
+
+        .pin-pad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 290px;
+            margin: 0 auto;
+        }
+
+        .pin-key {
+            height: 64px;
+            border-radius: 18px;
+            background: white;
+            border: 1.5px solid #EDD5EC;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all .15s;
+            box-shadow: 0 2px 8px rgba(233, 30, 140, .05);
+            font-family: 'DM Sans', sans-serif;
+            touch-action: manipulation;
+            user-select: none;
+        }
+
+        .pin-key:active {
+            transform: scale(.92);
+            background: var(--rose-light);
+        }
+
+        .pin-key .sub {
+            font-size: 8px;
+            color: var(--text3);
+            letter-spacing: 1.5px;
+            font-weight: 700;
+        }
+
+        .pin-key.action {
+            background: var(--rose-pale);
+            color: var(--rose2);
+        }
+
+        .pin-key.enter {
+            background: linear-gradient(135deg, var(--rose), var(--plum2));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 8px 24px rgba(233, 30, 140, .4);
+        }
+
+        /* ── LOADING ── */
+        #s-loading {
+            background: linear-gradient(170deg, #1A0A1E, #2D0A3A);
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 48px 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #s-loading::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 40%, rgba(233, 30, 140, .25) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 70%, rgba(123, 45, 139, .3) 0%, transparent 55%);
+        }
+
+        .load-ring {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .load-ring::before,
+        .load-ring::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+        }
+
+        .load-ring::before {
+            border: 3px solid rgba(233, 30, 140, .2);
+        }
+
+        .load-ring::after {
+            border: 3px solid transparent;
+            border-top-color: var(--rose3);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .load-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--rose3);
+            font-size: 40px;
+        }
+
+        .load-t {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 26px;
+            color: white;
+            margin-bottom: 6px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .load-s {
+            font-size: 14px;
+            color: rgba(255, 255, 255, .4);
+            position: relative;
+            z-index: 1;
+        }
+
+        .prog-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(233, 30, 140, .2);
+            border-radius: 100px;
+            margin: 28px auto 0;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        .prog-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--rose), var(--rose3));
+            animation: prog 3.2s ease forwards;
+            border-radius: 100px;
+        }
+
+        @keyframes prog {
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
+        }
+
+        /* ── HOME ── */
+        #s-home {
+            background: var(--bg);
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 0 calc(80px + var(--sb));
+        }
+
+        .home-hdr {
+            position: relative;
+            overflow: hidden;
+            padding: calc(48px + var(--st)) 24px 28px;
+            border-radius: 0 0 40px 40px;
+        }
+
+        .home-hdr-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .home-hdr-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(160deg, rgba(45, 10, 58, .82) 0%, rgba(123, 45, 139, .75) 60%, rgba(233, 30, 140, .6) 100%);
+        }
+
+        .home-hdr>*:not(.home-hdr-img):not(.home-hdr-overlay) {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hdr-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .hdr-greet-sm {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .65);
+            font-weight: 500;
+            margin-bottom: 3px;
+            letter-spacing: .3px;
+        }
+
+        .hdr-greet-big {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(22px, 5.5vw, 30px);
+            color: white;
+            font-weight: 600;
+        }
+
+        .hdr-greet-big em {
+            font-style: italic;
+            color: #FFB3D9;
+        }
+
+        .avatar-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .2);
+            border: 1.5px solid rgba(255, 255, 255, .3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            backdrop-filter: blur(8px);
+        }
+
+        /* Cycle ring */
+        .cycle-ring-wrap {
+            margin: 18px auto 0;
+            position: relative;
+            width: min(155px, 42vw);
+            height: min(155px, 42vw);
+            z-index: 1;
+        }
+
+        .cycle-ring-wrap svg {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+        }
+
+        .ring-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .ring-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(36px, 10vw, 48px);
+            font-weight: 700;
+            color: white;
+            line-height: 1;
+        }
+
+        .ring-lbl {
+            font-size: 9px;
+            color: rgba(255, 255, 255, .7);
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-top: 3px;
+            text-transform: uppercase;
+        }
+
+        .ring-sub {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .7);
+            text-align: center;
+            margin-top: 14px;
+            font-weight: 400;
+        }
+
+        /* Stats */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding: 20px 20px 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 16px 12px;
+            text-align: center;
+            box-shadow: var(--shadow2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: .04;
+            background: linear-gradient(135deg, var(--rose), var(--plum2));
+        }
+
+        .stat-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--rose2);
+        }
+
+        .stat-lbl {
+            font-size: 10px;
+            color: var(--text3);
+            font-weight: 600;
+            margin-top: 3px;
+            letter-spacing: .3px;
+        }
+
+        /* Section headers */
+        .sec-hdr {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 22px 20px 10px;
+        }
+
+        .sec-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .sec-link {
+            font-size: 13px;
+            color: var(--rose2);
+            font-weight: 600;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        /* Phase chips */
+        .phase-scroll {
+            display: flex;
+            gap: 8px;
+            padding: 0 20px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .phase-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .phase-chip {
+            flex-shrink: 0;
+            padding: 9px 18px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            background: white;
+            color: var(--text2);
+            box-shadow: var(--shadow2);
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .phase-chip.active {
+            background: linear-gradient(135deg, var(--rose), var(--plum2));
+            color: white;
+            box-shadow: 0 6px 20px rgba(233, 30, 140, .3);
+        }
+
+        .phase-chip .phase-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+        }
+
+        /* Featured Tip Card */
+        .feat-card {
+            margin: 0 20px;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            position: relative;
+            height: 160px;
+        }
+
+        .feat-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .feat-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(20, 5, 30, .75) 0%, rgba(233, 30, 140, .3) 100%);
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+        }
+
+        .feat-card-content .badge {
+            display: inline-block;
+            background: var(--rose);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 100px;
+            margin-bottom: 7px;
+        }
+
+        .feat-card-content .title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            line-height: 1.3;
+        }
+
+        /* Analysis card */
+        .analysis-card {
+            margin: 0 20px;
+            background: white;
+            border-radius: 22px;
+            padding: 20px;
+            box-shadow: var(--shadow2);
+        }
+
+        .analysis-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .analysis-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .analysis-sub {
+            font-size: 12px;
+            color: var(--text3);
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .analysis-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+        }
+
+        .abar-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .abar-lbl {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text2);
+            width: 80px;
+            flex-shrink: 0;
+        }
+
+        .abar-track {
+            flex: 1;
+            height: 7px;
+            border-radius: 100px;
+            background: var(--rose-pale);
+            overflow: hidden;
+        }
+
+        .abar-fill {
+            height: 100%;
+            border-radius: 100px;
+            transition: width .9s cubic-bezier(.22, .61, .36, 1);
+        }
+
+        .abar-val {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text3);
+            width: 24px;
+            text-align: right;
+        }
+
+        /* Mood row */
+        .mood-row {
+            display: flex;
+            gap: 8px;
+            padding: 0 20px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .mood-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mood-btn {
+            flex-shrink: 0;
+            padding: 12px 14px;
+            border-radius: 18px;
+            border: 1.5px solid #EDD5EC;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            transition: all .15s;
+            min-width: 72px;
+            touch-action: manipulation;
+        }
+
+        .mood-btn.selected,
+        .mood-btn:hover {
+            border-color: var(--rose);
+            background: var(--rose-pale);
+        }
+
+        .mood-icon-wrap {
+            width: 34px;
+            height: 34px;
+            margin: 0 auto 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .mood-name {
+            font-size: 10px;
+            color: var(--text3);
+            font-weight: 600;
+            letter-spacing: .3px;
+        }
+
+        .mood-btn.selected .mood-name {
+            color: var(--rose2);
+        }
+
+        /* Tip cards */
+        .tip-scroll {
+            display: flex;
+            gap: 14px;
+            padding: 0 20px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .tip-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tip-card {
+            flex-shrink: 0;
+            width: min(155px, 42vw);
+            border-radius: 20px;
+            overflow: hidden;
+            background: white;
+            box-shadow: var(--shadow2);
+            cursor: pointer;
+            transition: transform .2s;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .tip-img {
+            width: 100%;
+            height: 88px;
+            object-fit: cover;
+        }
+
+        .tip-body {
+            padding: 12px;
+        }
+
+        .tip-badge {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .8px;
+            padding: 3px 9px;
+            border-radius: 100px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .tip-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.4;
+        }
+
+        /* Relaxation */
+        .relax-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding: 0 20px;
+        }
+
+        .relax-card {
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform .2s;
+            box-shadow: var(--shadow2);
+            touch-action: manipulation;
+            position: relative;
+        }
+
+        .relax-card:active {
+            transform: scale(.96);
+        }
+
+        .relax-card-img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+        }
+
+        .relax-card-body {
+            padding: 10px;
+            background: white;
+        }
+
+        .relax-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 6px;
+            font-size: 18px;
+        }
+
+        .relax-name {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.3;
+            text-align: center;
+            letter-spacing: .2px;
+        }
+
+        /* Prediction chart */
+        .pred-card {
+            margin: 0 20px;
+            background: white;
+            border: 1.5px solid #F3C6E0;
+            border-radius: 22px;
+            padding: 20px;
+            box-shadow: var(--shadow2);
+        }
+
+        .pred-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 3px;
+        }
+
+        .pred-sub {
+            font-size: 12px;
+            color: var(--text3);
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .mini-chart {
+            height: 72px;
+            display: flex;
+            align-items: flex-end;
+            gap: 5px;
+        }
+
+        .chart-bar-wrap {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .chart-bar {
+            width: 100%;
+            border-radius: 6px 6px 0 0;
+            transition: height .7s;
+            position: relative;
+            min-height: 4px;
+        }
+
+        .chart-bar.high {
+            background: linear-gradient(to top, var(--rose2), var(--rose3));
+        }
+
+        .chart-bar.med {
+            background: linear-gradient(to top, #F06292, #F48FB1);
+        }
+
+        .chart-bar.low {
+            background: var(--rose-light);
+        }
+
+        .chart-lbl {
+            font-size: 9px;
+            color: var(--text3);
+            font-weight: 600;
+        }
+
+        .chart-bar.active-bar::after {
+            content: 'Peak';
+            position: absolute;
+            top: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--rose2);
+            color: white;
+            font-size: 8px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+
+        /* ── BOTTOM NAV ── */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 28px 28px 0 0;
+            padding: 10px 8px calc(10px + var(--sb));
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 -4px 30px rgba(233, 30, 140, .1);
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            cursor: pointer;
+            padding: 8px 14px;
+            border-radius: 14px;
+            transition: all .15s;
+            background: none;
+            border: none;
+            touch-action: manipulation;
+            min-width: 48px;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: var(--rose-pale);
+        }
+
+        .nav-item .material-icons-round {
+            font-size: 24px;
+            color: var(--text3);
+            transition: color .15s;
+        }
+
+        .nav-item.active .material-icons-round {
+            color: var(--rose2);
+        }
+
+        .nav-lbl {
+            font-size: 10px;
+            color: var(--text3);
+            font-weight: 600;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .nav-item.active .nav-lbl {
+            color: var(--rose2);
+        }
+
+        .nav-fab-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--rose), var(--plum2));
+            box-shadow: 0 6px 20px rgba(233, 30, 140, .5);
+            margin-bottom: 2px;
+        }
+
+        .nav-fab-wrap .material-icons-round {
+            color: white !important;
+            font-size: 26px;
+        }
+
+        /* ── CALENDAR PAGE ── */
+        #s-calendar-full,
+        #s-insights,
+        #s-settings,
+        #s-pin-change,
+        #s-profile,
+        #s-otp,
+        #s-period-date,
+        #s-pin-setup,
+        #s-pin-entry-existing,
+        #s-bubble,
+        #s-memory,
+        #s-breathing {
+            background: var(--bg);
+        }
+
+        /* ── INSIGHTS ── */
+        .insight-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 0 20px;
+            margin-bottom: 16px;
+        }
+
+        .ins-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: var(--shadow2);
+            text-align: center;
+        }
+
+        .ins-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--rose2);
+        }
+
+        .ins-lbl {
+            font-size: 11px;
+            color: var(--text3);
+            font-weight: 600;
+            margin-top: 3px;
+            letter-spacing: .3px;
+        }
+
+        .mood-hist-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 0 20px;
+            box-shadow: var(--shadow2);
+        }
+
+        .mood-hist-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .mood-row-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 0;
+            border-bottom: 1px solid var(--rose-pale);
+        }
+
+        .mood-row-item:last-child {
+            border-bottom: none;
+        }
+
+        .mood-badge {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 3px 12px;
+            border-radius: 100px;
+        }
+
+        /* ── SETTINGS ── */
+        .profile-hero {
+            text-align: center;
+            padding: 0 24px 24px;
+            position: relative;
+        }
+
+        .profile-hero-img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: -50px;
+            opacity: .8;
+        }
+
+        .profile-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--rose), var(--plum2));
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 36px rgba(233, 30, 140, .4);
+            border: 4px solid var(--bg);
+            position: relative;
+            z-index: 1;
+            font-size: 40px;
+            color: white;
+        }
+
+        .profile-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .profile-age {
+            font-size: 13px;
+            color: var(--text3);
+            font-weight: 500;
+        }
+
+        .settings-list {
+            padding: 0 20px;
+        }
+
+        .settings-item {
+            background: white;
+            border-radius: 18px;
+            padding: 16px 18px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow2);
+            cursor: pointer;
+            transition: background .15s;
+        }
+
+        .settings-item:active {
+            background: var(--rose-pale);
+        }
+
+        .settings-item-left {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .settings-icon-wrap {
+            width: 40px;
+            height: 40px;
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .settings-lbl {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .settings-val {
+            font-size: 13px;
+            color: var(--text3);
+            font-weight: 500;
+        }
+
+        .toggle {
+            width: 48px;
+            height: 28px;
+            border-radius: 14px;
+            background: #EDD5EC;
+            position: relative;
+            cursor: pointer;
+            transition: background .2s;
+            flex-shrink: 0;
+        }
+
+        .toggle.on {
+            background: var(--rose);
+        }
+
+        .toggle::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            transition: transform .22s;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .18);
+        }
+
+        .toggle.on::after {
+            transform: translateX(20px);
+        }
+
+        /* ── GAMES ── */
+        .game-screen-wrap {
+            max-width: 520px;
+            margin: 0 auto;
+            padding: calc(24px + var(--st)) 20px calc(90px + var(--sb));
+        }
+
+        .score-bar {
+            background: white;
+            border-radius: 18px;
+            padding: 16px 22px;
+            display: flex;
+            justify-content: space-between;
+            box-shadow: var(--shadow2);
+            margin-bottom: 14px;
+        }
+
+        .score-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--rose2);
+        }
+
+        .score-lbl {
+            font-size: 10px;
+            color: var(--text3);
+            font-weight: 600;
+            letter-spacing: .3px;
+        }
+
+        .bubble-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .bubble {
+            aspect-ratio: 1;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: all .2s;
+            background: linear-gradient(135deg, #F48FB1, var(--rose));
+            box-shadow: 0 5px 15px rgba(233, 30, 140, .3);
+            touch-action: manipulation;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .bubble:active {
+            transform: scale(.85);
+        }
+
+        .bubble.popped {
+            background: var(--rose-light);
+            box-shadow: none;
+            transform: scale(.1);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .mem-card {
+            aspect-ratio: 1;
+            border-radius: 16px;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform .4s;
+            touch-action: manipulation;
+        }
+
+        .mem-card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .mem-front,
+        .mem-back {
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backface-visibility: hidden;
+        }
+
+        .mem-back {
+            background: linear-gradient(135deg, var(--rose), var(--plum2));
+            color: white;
+            font-size: 22px;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+        }
+
+        .mem-front {
+            background: white;
+            border: 2px solid var(--rose-light);
+            transform: rotateY(180deg);
+            font-size: 26px;
+        }
+
+        .mem-card.matched .mem-front {
+            background: var(--rose-pale);
+            border-color: var(--rose);
+        }
+
+        .breath-circle {
+            width: min(200px, 56vw);
+            height: min(200px, 56vw);
+            border-radius: 50%;
+            background: linear-gradient(135deg, #F48FB1, var(--rose));
+            margin: 28px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            cursor: pointer;
+            touch-action: manipulation;
+            box-shadow: 0 15px 50px rgba(233, 30, 140, .4);
+        }
+
+        .breath-circle.inhale {
+            animation: inhale 4s ease-in-out;
+        }
+
+        .breath-circle.exhale {
+            animation: exhale 4s ease-in-out;
+        }
+
+        @keyframes inhale {
+            0% {
+                transform: scale(1)
+            }
+
+            100% {
+                transform: scale(1.3)
+            }
+        }
+
+        @keyframes exhale {
+            0% {
+                transform: scale(1.3)
+            }
+
+            100% {
+                transform: scale(1)
+            }
+        }
+
+        .breath-lbl {
+            text-align: center;
+            font-size: 18px;
+            color: var(--text2);
+            font-weight: 600;
+        }
+
+        .breath-count {
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 52px;
+            color: var(--rose2);
+            font-weight: 700;
+        }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            top: calc(20px + var(--st));
+            left: 50%;
+            transform: translateX(-50%) translateY(-80px);
+            background: white;
+            border-radius: 100px;
+            padding: 12px 22px;
+            box-shadow: 0 8px 36px rgba(233, 30, 140, .2);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            z-index: 1001;
+            transition: transform .3s ease;
+            border: 1.5px solid var(--rose-light);
+            white-space: nowrap;
+            max-width: calc(100vw - 40px);
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.error {
+            border-color: #EF4444;
+            color: #B91C1C;
+        }
+
+        /* Upcoming */
+        .upcoming-item {
+            background: white;
+            border-radius: 16px;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow2);
+        }
+
+        .upcoming-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .upcoming-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .upcoming-lbl {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .upcoming-date {
+            font-size: 13px;
+            color: var(--text3);
+            font-weight: 600;
+        }
+
+        /* Legend dot */
+        .legend-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media(min-width:600px) {
+            .bubble-grid {
+                grid-template-columns: repeat(8, 1fr)
+            }
+
+            .relax-grid {
+                padding: 0 32px
+            }
+
+            .home-hdr {
+                padding-left: 32px;
+                padding-right: 32px
+            }
+        }
+
+        @media(max-width:360px) {
+            .otp-box {
+                width: 50px;
+                height: 58px;
+                font-size: 22px
+            }
+
+            .pin-key {
+                height: 58px;
+                font-size: 20px
+            }
+
+            .bubble-grid {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 6px
+            }
+        }
+
+        @media(max-height:500px) and (orientation:landscape) {
+            .home-hdr {
+                padding-top: 16px;
+                padding-bottom: 20px
+            }
+
+            .cycle-ring-wrap {
+                width: 90px;
+                height: 90px
+            }
+
+            .ring-num {
+                font-size: 28px
+            }
+        }
+
+        .hidden {
+            display: none !important
+        }
+
+        .mt-auto {
+            margin-top: auto
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ██ WELCOME ██ -->
+    <div id="s-welcome" class="screen active">
+        <img class="welcome-hero-img" src="https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?w=800&q=80"
+            alt="serene night sky" loading="eager" />
+        <div class="welcome-gradient-overlay"></div>
+        <div class="welcome-mesh"></div>
+
+        <div class="welcome-moon-icon">
+            <div class="moon-circle">
+                <img class="moon-img" src="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=400&q=80"
+                    alt="moon" loading="eager" />
+            </div>
+        </div>
+
+        <div class="float-pill p1">
+            <span class="pdot" style="background:#FF4DA6"></span>Cycle Day 14
+        </div>
+        <div class="float-pill p2">
+            <span class="pdot" style="background:#26A69A"></span>Fertile Window
+        </div>
+        <div class="float-pill p3">
+            <span class="pdot" style="background:#CE93D8"></span>Mood Logged ✓
+        </div>
+
+        <div class="welcome-bottom">
+            <div class="welcome-badge">
+                <span class="material-icons-round" style="font-size:13px;color:#FF88CC">auto_awesome</span>
+                Your Wellness Companion
+            </div>
+            <h1 class="welcome-title">Predict cycles<br><em>accurately</em> &<br><strong>track with ease</strong></h1>
+            <p class="welcome-sub">A private, calm space for cycle tracking, mood logging and holistic wellness.</p>
+            <div class="trust-chips">
+                <div class="trust-chip"><span class="material-icons-round">shield</span>Private</div>
+                <div class="trust-chip"><span class="material-icons-round">lock</span>Encrypted</div>
+                <div class="trust-chip"><span class="material-icons-round">smartphone</span>On-Device</div>
+            </div>
+            <div class="btn-stack">
+                <button class="btn-primary" onclick="goTo('s-profile')">
+                    <span class="material-icons-round" style="font-size:18px">person_add</span>
+                    Get Started
+                </button>
+                <button class="btn-ghost" onclick="goTo('s-pin-entry-existing')">Restore Data / Sign In</button>
+            </div>
+            <p class="welcome-foot">No account needed · All data stays on your device</p>
+        </div>
+    </div>
+
+    <!-- ██ PROFILE SETUP ██ -->
+    <div id="s-profile" class="screen">
+        <div class="ob-shell">
+            <div class="ob-header">
+                <button class="back-btn" onclick="goTo('s-welcome')"><span
+                        class="material-icons-round">arrow_back</span></button>
+                <div class="ob-step-pill">Step 1 of 4</div>
+                <div class="progress-dots">
+                    <div class="pdot done"></div>
+                    <div class="pdot"></div>
+                    <div class="pdot"></div>
+                    <div class="pdot"></div>
+                </div>
+            </div>
+            <div class="ob-banner">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=75" alt="wellness"
+                    loading="lazy" />
+                <div class="ob-banner-overlay">
+                    <div class="ob-banner-text">
+                        <div class="title">Start your<br>wellness journey</div>
+                        <div class="sub">Track your cycle, mood<br>& health effortlessly</div>
+                    </div>
+                </div>
+            </div>
+            <h2 class="screen-h">Tell us about you</h2>
+            <p class="screen-p">Stored only on your device — totally private.</p>
+            <div class="inp-group">
+                <label class="inp-label">First Name</label>
+                <div class="inp-wrap">
+                    <span class="inp-icon material-icons-round">person</span>
+                    <input id="inp-name" class="inp-field" type="text" placeholder="e.g. Sofia" maxlength="30"
+                        autocomplete="given-name" />
+                </div>
+            </div>
+            <div class="inp-group">
+                <label class="inp-label">Date of Birth</label>
+                <div class="inp-wrap">
+                    <span class="inp-icon material-icons-round">cake</span>
+                    <input id="inp-dob" class="inp-field" type="date" autocomplete="bday" />
+                </div>
+            </div>
+            <div class="inp-group">
+                <label class="inp-label">Average Cycle Length</label>
+                <div class="stepper">
+                    <button class="stepper-btn" onclick="stepCycle(-1)"><span
+                            class="material-icons-round">remove</span></button>
+                    <div>
+                        <div class="stepper-val" id="cycle-val">28</div>
+                        <div class="stepper-unit">days</div>
+                    </div>
+                    <button class="stepper-btn" onclick="stepCycle(1)"><span
+                            class="material-icons-round">add</span></button>
+                </div>
+            </div>
+            <div class="mt-auto" style="margin-top:32px">
+                <button class="btn-primary" onclick="submitProfile()">
+                    Continue <span class="material-icons-round" style="font-size:18px">arrow_forward</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ██ OTP ██ -->
+    <div id="s-otp" class="screen">
+        <div class="ob-shell">
+            <div class="ob-header">
+                <button class="back-btn" onclick="goTo('s-profile')"><span
+                        class="material-icons-round">arrow_back</span></button>
+                <div class="ob-step-pill">Step 2 of 4</div>
+                <div class="progress-dots">
+                    <div class="pdot done"></div>
+                    <div class="pdot done"></div>
+                    <div class="pdot"></div>
+                    <div class="pdot"></div>
+                </div>
+            </div>
+            <div class="ob-banner" style="height:120px">
+                <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&q=75" alt="verification"
+                    loading="lazy" />
+                <div class="ob-banner-overlay">
+                    <div class="ob-banner-text">
+                        <div class="title">Verify your identity</div>
+                        <div class="sub">Enter the 4-digit code<br>shown below to confirm</div>
+                    </div>
+                </div>
+            </div>
+            <div class="otp-card">
+                <div class="otp-label">Your Verification Code</div>
+                <div id="otp-show" class="otp-code">----</div>
+            </div>
+            <p style="font-size:13px;text-align:center;color:var(--text3);margin-bottom:16px;font-weight:500">Enter the
+                code above into the boxes below</p>
+            <div class="otp-boxes">
+                <input class="otp-box" id="otp0" maxlength="1" type="tel" inputmode="numeric" pattern="[0-9]*"
+                    oninput="otpInput(this,0)" onkeydown="otpBack(event,0)" aria-label="Digit 1" />
+                <input class="otp-box" id="otp1" maxlength="1" type="tel" inputmode="numeric" pattern="[0-9]*"
+                    oninput="otpInput(this,1)" onkeydown="otpBack(event,1)" aria-label="Digit 2" />
+                <input class="otp-box" id="otp2" maxlength="1" type="tel" inputmode="numeric" pattern="[0-9]*"
+                    oninput="otpInput(this,2)" onkeydown="otpBack(event,2)" aria-label="Digit 3" />
+                <input class="otp-box" id="otp3" maxlength="1" type="tel" inputmode="numeric" pattern="[0-9]*"
+                    oninput="otpInput(this,3)" onkeydown="otpBack(event,3)" aria-label="Digit 4" />
+            </div>
+            <button class="btn-primary" onclick="verifyOtp()">
+                <span class="material-icons-round" style="font-size:18px">verified</span>Verify Code
+            </button>
+        </div>
+    </div>
+
+    <!-- ██ PERIOD DATE ██ -->
+    <div id="s-period-date" class="screen">
+        <div class="ob-shell">
+            <div class="ob-header">
+                <button class="back-btn" onclick="goTo('s-otp')"><span
+                        class="material-icons-round">arrow_back</span></button>
+                <div class="ob-step-pill">Step 3 of 4</div>
+                <div class="progress-dots">
+                    <div class="pdot done"></div>
+                    <div class="pdot done"></div>
+                    <div class="pdot done"></div>
+                    <div class="pdot"></div>
+                </div>
+            </div>
+            <h2 class="screen-h">Last period start?</h2>
+            <p class="screen-p">Select the first day of your most recent period.</p>
+            <div class="mini-cal" id="setup-calendar"></div>
+            <div id="selected-date-label"
+                style="text-align:center;margin-top:14px;font-size:14px;color:var(--text3);font-weight:500;min-height:22px">
+            </div>
+            <div style="margin-top:24px">
+                <button class="btn-primary" onclick="submitPeriodDate()">
+                    Continue <span class="material-icons-round" style="font-size:18px">arrow_forward</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ██ PIN SETUP ██ -->
+    <div id="s-pin-setup" class="screen">
+        <div class="ob-shell" style="justify-content:center">
+            <div class="ob-header">
+                <button class="back-btn" onclick="goTo('s-period-date')"><span
+                        class="material-icons-round">arrow_back</span></button>
+                <div class="ob-step-pill">Step 4 of 4</div>
+                <div class="progress-dots">
+                    <div class="pdot done"></div>
+                    <div class="pdot done"></div>
+                    <div class="pdot done"></div>
+                    <div class="pdot done"></div>
+                </div>
+            </div>
+            <div class="ob-banner" style="height:120px">
+                <img src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=600&q=75" alt="security"
+                    loading="lazy" />
+                <div class="ob-banner-overlay">
+                    <div class="ob-banner-text">
+                        <div class="title">Private &amp; Secure</div>
+                        <div class="sub">Your PIN is stored only<br>on this device. Never shared.</div>
+                    </div>
+                </div>
+            </div>
+            <h2 class="screen-h">Set your PIN</h2>
+            <p class="screen-p">Your 4-digit PIN locks the app and protects your data.</p>
+            <div id="pin-setup-dots" class="pin-dots">
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+            </div>
+            <p id="pin-setup-hint"
+                style="text-align:center;font-size:13px;color:var(--text3);margin-bottom:20px;font-weight:500">Choose a
+                4-digit PIN</p>
+            <div class="pin-pad" id="pin-pad-setup"></div>
+        </div>
+    </div>
+
+    <!-- ██ LOADING ██ -->
+    <div id="s-loading" class="screen">
+        <div class="load-ring">
+            <span class="load-icon material-icons-round">nights_stay</span>
+        </div>
+        <div class="load-t">Setting up LunaFlow</div>
+        <div class="load-s">Encrypting your data securely…</div>
+        <div class="prog-bar">
+            <div class="prog-fill" id="prog-fill"></div>
+        </div>
+    </div>
+
+    <!-- ██ PIN ENTRY ██ -->
+    <div id="s-pin-entry-existing" class="screen">
+        <div class="ob-shell" style="justify-content:center;align-items:center">
+            <div style="text-align:center;margin-bottom:32px">
+                <div
+                    style="width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--plum2));margin:0 auto 16px;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 40px rgba(233,30,140,.45);font-size:44px;color:white">
+                    <span class="material-icons-round" style="font-size:44px">nights_stay</span>
+                </div>
+                <h2 class="screen-h" style="margin-bottom:4px">Welcome back</h2>
+                <p id="pin-entry-name" style="font-size:14px;color:var(--text3);font-weight:500">Enter your PIN to
+                    unlock</p>
+            </div>
+            <div id="pin-entry-dots" class="pin-dots">
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+            </div>
+            <p id="pin-entry-error"
+                style="text-align:center;font-size:13px;color:#E11D48;margin-bottom:16px;min-height:20px;font-weight:700">
+            </p>
+            <div class="pin-pad" id="pin-pad-entry"></div>
+            <button onclick="goTo('s-welcome')"
+                style="margin-top:22px;background:none;border:none;color:var(--text3);font-size:13px;cursor:pointer;text-decoration:underline;font-family:'DM Sans',sans-serif;font-weight:500">Use
+                a different account</button>
+        </div>
+    </div>
+
+    <!-- ██ HOME ██ -->
+    <div id="s-home" class="screen">
+        <!-- Header with background image -->
+        <div class="home-hdr">
+            <img class="home-hdr-img" src="https://images.unsplash.com/photo-1536514498073-50e69d39c6cf?w=800&q=80"
+                alt="wellness background" loading="lazy" />
+            <div class="home-hdr-overlay"></div>
+            <div class="hdr-top">
+                <div>
+                    <div class="hdr-greet-sm" id="home-time-greeting">Good morning</div>
+                    <div class="hdr-greet-big">Hi, <em id="home-name">Sofia</em> 👋</div>
+                </div>
+                <button class="avatar-btn" onclick="goTo('s-settings')">
+                    <span class="material-icons-round">person</span>
+                </button>
+            </div>
+            <div class="cycle-ring-wrap">
+                <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="80" cy="80" r="65" stroke="rgba(255,255,255,.18)" stroke-width="9" fill="none" />
+                    <circle id="home-ring-progress" cx="80" cy="80" r="65" stroke="rgba(255,255,255,.92)"
+                        stroke-width="9" fill="none" stroke-dasharray="408" stroke-dashoffset="200"
+                        stroke-linecap="round" />
+                </svg>
+                <div class="ring-center">
+                    <div class="ring-num" id="home-cycle-day">1</div>
+                    <div class="ring-lbl">Cycle Day</div>
+                </div>
+            </div>
+            <div class="ring-sub" id="home-next-period">Next period in <strong>— days</strong></div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-num" id="stat-cycle-len">28</div>
+                <div class="stat-lbl">Cycle Length</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="stat-days-left">—</div>
+                <div class="stat-lbl">Days Left</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="stat-phase-short">—</div>
+                <div class="stat-lbl">Phase</div>
+            </div>
+        </div>
+
+        <!-- Phase -->
+        <div class="sec-hdr">
+            <div class="sec-title">Current Phase</div>
+        </div>
+        <div class="phase-scroll" id="phase-row"></div>
+
+        <!-- Featured tip -->
+        <div class="sec-hdr">
+            <div class="sec-title">Today's Focus</div><button class="sec-link">See All</button>
+        </div>
+        <div class="feat-card">
+            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=700&q=75" alt="yoga wellness"
+                loading="lazy" />
+            <div class="feat-card-overlay">
+                <div class="feat-card-content">
+                    <div class="badge">Wellness Tip</div>
+                    <div class="title">Light yoga during<br>menstruation eases cramps</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prediction chart -->
+        <div class="sec-hdr">
+            <div class="sec-title">Cycle Forecast</div><button class="sec-link" onclick="goTo('s-calendar-full')">View
+                All</button>
+        </div>
+        <div class="pred-card">
+            <div class="pred-title">Next 6 days</div>
+            <div class="pred-sub">Probability of period starting</div>
+            <div class="mini-chart" id="mini-chart"></div>
+        </div>
+
+        <!-- Analysis -->
+        <div class="sec-hdr">
+            <div class="sec-title">Symptom Analysis</div><button class="sec-link"
+                onclick="goTo('s-insights')">Details</button>
+        </div>
+        <div class="analysis-card">
+            <div class="analysis-head">
+                <div>
+                    <div class="analysis-title">Logged symptoms</div>
+                    <div class="analysis-sub">Based on mood & cycle data</div>
+                </div>
+                <span class="material-icons-round" style="color:var(--rose2);font-size:24px">donut_large</span>
+            </div>
+            <div class="analysis-bars">
+                <div class="abar-row"><span class="abar-lbl">Period</span>
+                    <div class="abar-track">
+                        <div class="abar-fill"
+                            style="width:40%;background:linear-gradient(90deg,var(--rose),var(--rose3))"></div>
+                    </div><span class="abar-val">x1</span>
+                </div>
+                <div class="abar-row"><span class="abar-lbl">Pre-ovul.</span>
+                    <div class="abar-track">
+                        <div class="abar-fill" style="width:0%;background:linear-gradient(90deg,#A78BFA,var(--plum2))">
+                        </div>
+                    </div><span class="abar-val">x0</span>
+                </div>
+                <div class="abar-row"><span class="abar-lbl">Fertile</span>
+                    <div class="abar-track">
+                        <div class="abar-fill" style="width:25%;background:linear-gradient(90deg,var(--sage),#00897B)">
+                        </div>
+                    </div><span class="abar-val">x1</span>
+                </div>
+                <div class="abar-row"><span class="abar-lbl">Post-ovul.</span>
+                    <div class="abar-track">
+                        <div class="abar-fill" style="width:50%;background:linear-gradient(90deg,var(--gold),#F57F17)">
+                        </div>
+                    </div><span class="abar-val">x2</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mood -->
+        <div class="sec-hdr">
+            <div class="sec-title">How are you feeling?</div>
+        </div>
+        <div class="mood-row" id="mood-row"></div>
+
+        <!-- Tips -->
+        <div class="sec-hdr">
+            <div class="sec-title">Wellness Tips</div><button class="sec-link">See All</button>
+        </div>
+        <div class="tip-scroll" id="tip-scroll"></div>
+
+        <!-- Relaxation -->
+        <div class="sec-hdr">
+            <div class="sec-title">Relaxation</div>
+        </div>
+        <div class="relax-grid">
+            <div class="relax-card" onclick="goTo('s-bubble')" role="button" tabindex="0">
+                <img class="relax-card-img"
+                    src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&q=70" alt="bubbles"
+                    loading="lazy" />
+                <div class="relax-card-body">
+                    <div class="relax-icon" style="background:#FCE4EC"><span class="material-icons-round"
+                            style="color:var(--rose2);font-size:16px">bubble_chart</span></div>
+                    <div class="relax-name">Zen Bubble Pop</div>
+                </div>
+            </div>
+            <div class="relax-card" onclick="goTo('s-memory')" role="button" tabindex="0">
+                <img class="relax-card-img" src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=300&q=70"
+                    alt="memory" loading="lazy" />
+                <div class="relax-card-body">
+                    <div class="relax-icon" style="background:#EDE7F6"><span class="material-icons-round"
+                            style="color:var(--plum2);font-size:16px">grid_view</span></div>
+                    <div class="relax-name">Memory Match</div>
+                </div>
+            </div>
+            <div class="relax-card" onclick="goTo('s-breathing')" role="button" tabindex="0">
+                <img class="relax-card-img"
+                    src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&q=70" alt="breathing"
+                    loading="lazy" />
+                <div class="relax-card-body">
+                    <div class="relax-icon" style="background:#FFF9C4"><span class="material-icons-round"
+                            style="color:#F57F17;font-size:16px">air</span></div>
+                    <div class="relax-name">Breathing Guide</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Nav -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" onclick="showTab(this)" id="nav-home">
+                <span class="material-icons-round">home</span>
+                <span class="nav-lbl">Home</span>
+            </button>
+            <button class="nav-item" onclick="goTo('s-calendar-full')" id="nav-cal">
+                <span class="material-icons-round">calendar_month</span>
+                <span class="nav-lbl">Calendar</span>
+            </button>
+            <button class="nav-item" style="margin-top:-14px" onclick="goTo('s-insights')">
+                <div class="nav-fab-wrap">
+                    <span class="material-icons-round">add</span>
+                </div>
+                <span class="nav-lbl" style="color:var(--rose2)">Log</span>
+            </button>
+            <button class="nav-item" onclick="goTo('s-insights')" id="nav-insights">
+                <span class="material-icons-round">bar_chart</span>
+                <span class="nav-lbl">Report</span>
+            </button>
+            <button class="nav-item" onclick="goTo('s-settings')" id="nav-settings">
+                <span class="material-icons-round">person</span>
+                <span class="nav-lbl">Profile</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- ██ CALENDAR ██ -->
+    <div id="s-calendar-full" class="screen">
+        <div class="ob-shell">
+            <div class="ob-header" style="margin-bottom:20px">
+                <button class="back-btn" onclick="goTo('s-home')"><span
+                        class="material-icons-round">arrow_back</span></button>
+                <h3 style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--text);font-weight:700">
+                    Calendar</h3>
+            </div>
+            <div class="mini-cal" id="full-calendar"></div>
+            <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;padding:0 4px">
+                <div style="display:flex;align-items:center;gap:6px">
+                    <div class="legend-dot" style="background:var(--rose)"></div><span
+                        style="font-size:12px;color:var(--text3);font-weight:600">Period</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px">
+                    <div class="legend-dot" style="background:#80CBC4"></div><span
+                        style="font-size:12px;color:var(--text3);font-weight:600">Fertile</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px">
+                    <div class="legend-dot" style="background:#FFF176"></div><span
+                        style="font-size:12px;color:var(--text3);font-weight:600">Ovulation</span>
+                </div>
+            </div>
+            <div class="sec-hdr" style="padding-left:0;padding-right:0">
+                <div class="sec-title">Upcoming</div>
+            </div>
+            <div id="upcoming-list"></div>
+        </div>
+    </div>
+
+    <!-- ██ INSIGHTS ██ -->
+    <div id="s-insights" class="screen">
+        <div class="ob-shell">
+            <div class="ob-header" style="margin-bottom:20px">
+                <button class="back-btn" onclick="goTo('s-home')"><span
+                        class="material-icons-round">arrow_back</span></button>
+                <h3 style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--text);font-weight:700">
+                    Insights & Report</h3>
+            </div>
+            <div id="insights-content"></div>
+        </div>
+    </div>
+
+    <!-- ██ SETTINGS ██ -->
+    <div id="s-settings" class="screen">
+        <div class="ob-shell" style="padding-left:0;padding-right:0">
+            <div style="padding:0 20px;margin-bottom:8px">
+                <div class="ob-header" style="margin-bottom:24px">
+                    <button class="back-btn" onclick="goTo('s-home')"><span
+                            class="material-icons-round">arrow_back</span></button>
+                    <h3 style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--text);font-weight:700">
+                        Profile & Settings</h3>
+                </div>
+            </div>
+            <div class="profile-hero">
+                <img class="profile-hero-img"
+                    src="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=600&q=75"
+                    alt="profile background" loading="lazy" />
+                <div class="profile-avatar">
+                    <span class="material-icons-round">person</span>
+                </div>
+                <div class="profile-name" id="settings-name">Sofia</div>
+                <div class="profile-age" id="settings-age"></div>
+            </div>
+            <div class="settings-list">
+                <div class="settings-item" onclick="goTo('s-pin-change')">
+                    <div class="settings-item-left">
+                        <div class="settings-icon-wrap" style="background:#FCE4EC"><span class="material-icons-round"
+                                style="color:var(--rose2)">lock</span></div>
+                        <span class="settings-lbl">Change PIN</span>
+                    </div>
+                    <span class="material-icons-round" style="color:var(--text3);font-size:18px">chevron_right</span>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-left">
+                        <div class="settings-icon-wrap" style="background:#EDE7F6"><span class="material-icons-round"
+                                style="color:var(--plum2)">schedule</span></div>
+                        <span class="settings-lbl">Cycle Length</span>
+                    </div>
+                    <span class="settings-val" id="settings-cycle-len">28 days</span>
+                </div>
+                <div class="settings-item" onclick="goTo('s-calendar-full')">
+                    <div class="settings-item-left">
+                        <div class="settings-icon-wrap" style="background:#FFF9C4"><span class="material-icons-round"
+                                style="color:#F9A825">calendar_today</span></div>
+                        <span class="settings-lbl">Update Period Date</span>
+                    </div>
+                    <span class="material-icons-round" style="color:var(--text3);font-size:18px">chevron_right</span>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-left">
+                        <div class="settings-icon-wrap" style="background:#E0F2F1"><span class="material-icons-round"
+                                style="color:var(--sage)">notifications</span></div>
+                        <span class="settings-lbl">Notifications</span>
+                    </div>
+                    <div class="toggle on" id="notif-toggle" onclick="this.classList.toggle('on')" role="switch"
+                        aria-checked="true"></div>
+                </div>
+                <div class="settings-item" onclick="clearData()">
+                    <div class="settings-item-left">
+                        <div class="settings-icon-wrap" style="background:#FFEBEE"><span class="material-icons-round"
+                                style="color:#E11D48">delete_outline</span></div>
+                        <span class="settings-lbl" style="color:#E11D48">Clear All Data</span>
+                    </div>
+                    <span class="material-icons-round" style="color:#E11D48;font-size:18px">chevron_right</span>
+                </div>
+            </div>
+            <p style="text-align:center;font-size:11px;color:var(--text3);margin-top:24px;padding:0 20px">LunaFlow v2.0
+                · All data stored locally on your device</p>
+        </div>
+    </div>
+
+    <!-- ██ PIN CHANGE ██ -->
+    <div id="s-pin-change" class="screen">
+        <div class="ob-shell" style="justify-content:center;align-items:center">
+            <div class="ob-header" style="margin-bottom:24px;align-self:stretch">
+                <button class="back-btn" onclick="goTo('s-settings')"><span
+                        class="material-icons-round">arrow_back</span></button>
+                <span
+                    style="font-size:12px;color:var(--text3);font-weight:700;letter-spacing:.8px;text-transform:uppercase">Security</span>
+            </div>
+            <h2 class="screen-h" style="margin-bottom:6px">Change PIN</h2>
+            <div
+                style="background:white;border-radius:16px;padding:14px 20px;margin-bottom:18px;text-align:center;box-shadow:var(--shadow2);width:100%">
+                <p id="pin-change-hint" style="font-size:14px;color:var(--text3);font-weight:500">Enter your current
+                    4-digit PIN</p>
+            </div>
+            <div id="pin-change-dots" class="pin-dots">
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+            </div>
+            <p id="pin-change-error"
+                style="text-align:center;font-size:13px;color:#E11D48;margin-bottom:16px;min-height:20px;font-weight:700">
+            </p>
+            <div class="pin-pad" id="pin-pad-change"></div>
+        </div>
+    </div>
+
+    <!-- ██ BUBBLE POP ██ -->
+    <div id="s-bubble" class="screen">
+        <div class="game-screen-wrap">
+            <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
+                <button class="back-btn" onclick="goTo('s-home')"><span
+                        class="material-icons-round">arrow_back</span></button>
+                <h3 style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--text);font-weight:700">Zen
+                    Bubble Pop</h3>
+            </div>
+            <div class="score-bar">
+                <div>
+                    <div class="score-num" id="bubble-score">0</div>
+                    <div class="score-lbl">Score</div>
+                </div>
+                <div style="text-align:right">
+                    <div class="score-num" id="bubble-remaining">0</div>
+                    <div class="score-lbl">Remaining</div>
+                </div>
+            </div>
+            <div class="bubble-grid" id="bubble-grid"></div>
+            <button class="btn-primary" style="margin-top:16px" onclick="resetBubbles()">
+                <span class="material-icons-round" style="font-size:18px">refresh</span>New Game
+            </button>
+        </div>
+    </div>
+
+    <!-- ██ MEMORY ██ -->
+    <div id="s-memory" class="screen">
+        <div class="game-screen-wrap">
+            <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
+                <button class="back-btn" onclick="goTo('s-home')"><span
+                        class="material-icons-round">arrow_back</span></button>
+                <h3 style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--text);font-weight:700">
+                    Memory Match</h3>
+            </div>
+            <div class="score-bar">
+                <div>
+                    <div class="score-num" id="mem-moves">0</div>
+                    <div class="score-lbl">Moves</div>
+                </div>
+                <div style="text-align:right">
+                    <div class="score-num" id="mem-pairs">0/8</div>
+                    <div class="score-lbl">Pairs</div>
+                </div>
+            </div>
+            <div class="memory-grid" id="memory-grid"></div>
+            <button class="btn-primary" style="margin-top:16px" onclick="resetMemory()">
+                <span class="material-icons-round" style="font-size:18px">refresh</span>New Game
+            </button>
+        </div>
+    </div>
+
+    <!-- ██ BREATHING ██ -->
+    <div id="s-breathing" class="screen">
+        <div class="game-screen-wrap" style="text-align:center">
+            <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+                <button class="back-btn" onclick="goTo('s-home')"><span
+                        class="material-icons-round">arrow_back</span></button>
+                <h3 style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--text);font-weight:700">
+                    Breathing Guide</h3>
+            </div>
+            <p style="font-size:14px;color:var(--text3);margin-bottom:12px;font-weight:500">Tap the circle and follow
+                the rhythm.</p>
+            <div class="breath-circle" id="breath-circle" onclick="startBreath()" role="button" tabindex="0">Tap
+                to<br>Begin</div>
+            <div class="breath-lbl" id="breath-label">Ready</div>
+            <div class="breath-count" id="breath-count"></div>
+            <div
+                style="margin-top:24px;background:white;border-radius:18px;padding:18px 20px;box-shadow:var(--shadow2);text-align:left">
+                <div
+                    style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:8px">
+                    <span class="material-icons-round" style="color:var(--rose2);font-size:18px">info</span>Box
+                    Breathing
+                </div>
+                <p style="font-size:13px;color:var(--text3);line-height:1.7">4s inhale → 4s hold → 4s exhale. Reduces
+                    stress and period discomfort.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+    <script>
+        // ── INIT ICONS CHECK ──
+        function tryIcons() { /* icons are CSS-based via Google Fonts — no init needed */ }
+
+        // ── PWA ──
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => { }));
+        }
+
+        // ── STATE ──
+        const APP_KEY = 'lunaflow_data_v2';
+        let appState = { name: '', dob: '', cycleLength: 28, lastPeriod: null, pin: '', moods: [], setupComplete: false };
+        function saveState() { try { localStorage.setItem(APP_KEY, JSON.stringify(appState)); } catch (e) { } }
+        function loadState() {
+            try { const d = localStorage.getItem(APP_KEY); if (d) { appState = { ...appState, ...JSON.parse(d) }; return true; } } catch (e) { }
+            return false;
+        }
+
+        // ── CYCLE STEPPER ──
+        let cycleVal = 28;
+        function stepCycle(d) {
+            cycleVal = Math.max(20, Math.min(45, cycleVal + d));
+            document.getElementById('cycle-val').textContent = cycleVal;
+        }
+
+        // ── NAV ──
+        function goTo(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            const el = document.getElementById(id);
+            if (el) { el.classList.add('active'); el.scrollTop = 0; }
+            if (id === 's-pin-entry-existing') initPinEntry();
+            if (id === 's-pin-setup') initPinSetupReal();
+            if (id === 's-pin-change') initPinChange();
+            if (id === 's-home') renderHome();
+            if (id === 's-calendar-full') renderFullCalendar();
+            if (id === 's-insights') renderInsights();
+            if (id === 's-settings') renderSettings();
+            if (id === 's-bubble') resetBubbles();
+            if (id === 's-memory') resetMemory();
+            if (id === 's-period-date') initSetupCalendar();
+            if (id === 's-breathing') {
+                breathPhase = 'idle';
+                document.getElementById('breath-label').textContent = 'Ready';
+                document.getElementById('breath-count').textContent = '';
+                if (breathTimer) clearInterval(breathTimer);
+            }
+        }
+        function showTab(el) {
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        // ── TOAST ──
+        function showToast(msg, isError = false) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.toggle('error', isError);
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2800);
+        }
+
+        // ── PROFILE ──
+        function submitProfile() {
+            const name = document.getElementById('inp-name').value.trim();
+            const dob = document.getElementById('inp-dob').value;
+            if (!name) { showToast('Please enter your name', true); return; }
+            if (!dob) { showToast('Please enter your date of birth', true); return; }
+            appState.name = name; appState.dob = dob; appState.cycleLength = cycleVal;
+            const otp = String(Math.floor(1000 + Math.random() * 9000));
+            appState._otp = otp;
+            document.getElementById('otp-show').textContent = otp;
+            ['otp0', 'otp1', 'otp2', 'otp3'].forEach(id => { document.getElementById(id).value = ''; });
+            goTo('s-otp');
+            setTimeout(() => document.getElementById('otp0').focus(), 300);
+        }
+        function otpInput(el, i) { el.value = el.value.replace(/[^0-9]/g, ''); if (el.value.length === 1 && i < 3) document.getElementById('otp' + (i + 1)).focus(); }
+        function otpBack(e, i) { if (e.key === 'Backspace' && !e.target.value && i > 0) document.getElementById('otp' + (i - 1)).focus(); }
+        function verifyOtp() {
+            const entered = [0, 1, 2, 3].map(i => document.getElementById('otp' + i).value).join('');
+            if (entered === appState._otp) { delete appState._otp; goTo('s-period-date'); }
+            else { showToast('Incorrect code. Try again.', true);['otp0', 'otp1', 'otp2', 'otp3'].forEach(id => { document.getElementById(id).value = ''; }); document.getElementById('otp0').focus(); }
+        }
+
+        // ── CALENDAR ──
+        let calState = { year: new Date().getFullYear(), month: new Date().getMonth(), selected: null };
+        let fullCalState = { year: new Date().getFullYear(), month: new Date().getMonth() };
+
+        function initSetupCalendar() {
+            const today = new Date();
+            calState = { year: today.getFullYear(), month: today.getMonth(), selected: null };
+            renderCal('setup-calendar', calState, d => {
+                calState.selected = d;
+                document.getElementById('selected-date-label').textContent = 'Selected: ' + d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            });
+        }
+        function renderCal(containerId, state, onSelect) {
+            const container = document.getElementById(containerId);
+            const dn = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+            const mn = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const today = new Date();
+            const ps = appState.lastPeriod ? new Date(appState.lastPeriod) : null;
+            const cl = appState.cycleLength || 28;
+            function inPeriod(d) { if (!ps) return false; const diff = (d - ps) / 864e5; return diff >= 0 && diff < 5; }
+            function inFertile(d) { if (!ps) return false; const ov = cl - 14; const diff = (d - ps) / 864e5; return diff >= (ov - 3) && diff <= (ov + 1); }
+            function isOvul(d) { if (!ps) return false; const diff = (d - ps) / 864e5; return Math.round(diff) === (cl - 14); }
+            const firstDay = new Date(state.year, state.month, 1).getDay();
+            const dim = new Date(state.year, state.month + 1, 0).getDate();
+            const prevD = new Date(state.year, state.month, 0).getDate();
+            let html = `<div class="cal-hdr">
+    <button class="cal-nav" onclick="navCal('${containerId}',-1)"><span class="material-icons-round" style="font-size:16px">chevron_left</span></button>
+    <span class="cal-month">${mn[state.month]} ${state.year}</span>
+    <button class="cal-nav" onclick="navCal('${containerId}',1)"><span class="material-icons-round" style="font-size:16px">chevron_right</span></button>
+  </div><div class="cal-grid">${dn.map(d => `<div class="cal-dn">${d}</div>`).join('')}`;
+            for (let i = 0; i < firstDay; i++) { const d = prevD - firstDay + i + 1; html += `<div class="cal-day other">${d}</div>`; }
+            for (let d = 1; d <= dim; d++) {
+                const date = new Date(state.year, state.month, d);
+                let cls = 'cal-day';
+                const isT = today.getFullYear() === state.year && today.getMonth() === state.month && today.getDate() === d;
+                const isSel = state.selected && state.selected.getFullYear() === state.year && state.selected.getMonth() === state.month && state.selected.getDate() === d;
+                if (isOvul(date)) cls += ' ovulation';
+                else if (inFertile(date)) cls += ' fertile';
+                else if (inPeriod(date)) cls += ' period';
+                if (isT) cls += ' today';
+                if (isSel) cls += ' selected';
+                html += `<div class="${cls}" onclick="selectCal('${containerId}',${state.year},${state.month},${d})">${d}</div>`;
+            }
+            const rem = 7 - ((firstDay + dim) % 7 || 7);
+            for (let i = 1; i <= rem && rem < 7; i++) html += `<div class="cal-day other">${i}</div>`;
+            html += '</div>';
+            container.innerHTML = html; container._onSelect = onSelect; container._state = state;
+        }
+        function navCal(containerId, dir) {
+            const container = document.getElementById(containerId); const state = container._state;
+            state.month += dir;
+            if (state.month < 0) { state.month = 11; state.year--; } if (state.month > 11) { state.month = 0; state.year++; }
+            renderCal(containerId, state, container._onSelect);
+        }
+        function selectCal(containerId, year, month, day) {
+            const container = document.getElementById(containerId); const state = container._state;
+            state.selected = new Date(year, month, day);
+            if (container._onSelect) container._onSelect(state.selected);
+            renderCal(containerId, state, container._onSelect);
+        }
+        function submitPeriodDate() {
+            if (!calState.selected) { showToast('Please select a date', true); return; }
+            appState.lastPeriod = calState.selected.toISOString().split('T')[0];
+            goTo('s-pin-setup');
+        }
+
+        // ── PIN ──
+        const PIN_KEYS = [
+            { l: '1', s: '' }, { l: '2', s: 'ABC' }, { l: '3', s: 'DEF' },
+            { l: '4', s: 'GHI' }, { l: '5', s: 'JKL' }, { l: '6', s: 'MNO' },
+            { l: '7', s: 'PQRS' }, { l: '8', s: 'TUV' }, { l: '9', s: 'WXYZ' },
+            { l: '', s: '', cls: 'action', id: 'pin-clear', icon: '<span class="material-icons-round" style="font-size:20px">backspace</span>' },
+            { l: '0', s: '' },
+            { l: '', s: '', cls: 'enter', id: 'pin-enter', icon: '<span class="material-icons-round" style="font-size:20px;color:white">check</span>' }
+        ];
+        let pinSetupBuf = [], pinChangeBuf = [], pinEntryBuf = [];
+
+        function updateDots(dotsId, buf) {
+            document.getElementById(dotsId).querySelectorAll('.pin-dot').forEach((d, i) => d.classList.toggle('filled', i < buf.length));
+        }
+        function buildPinPad(padId, onDigit, onClear) {
+            const pad = document.getElementById(padId); pad.innerHTML = '';
+            PIN_KEYS.forEach(k => {
+                const btn = document.createElement('button'); btn.className = 'pin-key ' + (k.cls || '');
+                if (k.icon) btn.innerHTML = k.icon; else btn.innerHTML = k.l + (k.s ? `<span class="sub">${k.s}</span>` : '');
+                btn.addEventListener('click', () => {
+                    if (k.id === 'pin-clear') { onClear(); return; }
+                    if (k.id === 'pin-enter') return;
+                    if (!k.l) return;
+                    onDigit(k.l);
+                });
+                pad.appendChild(btn);
+            });
+        }
+        function initPinSetupReal() {
+            pinSetupBuf = [];
+            buildPinPad('pin-pad-setup', l => {
+                if (pinSetupBuf.length < 4) pinSetupBuf.push(l);
+                updateDots('pin-setup-dots', pinSetupBuf);
+                if (pinSetupBuf.length === 4) {
+                    setTimeout(() => {
+                        appState.pin = pinSetupBuf.join(''); appState.setupComplete = true; saveState();
+                        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+                        document.getElementById('s-loading').classList.add('active');
+                        const fill = document.getElementById('prog-fill');
+                        if (fill) { fill.style.animation = 'none'; void fill.offsetWidth; fill.style.animation = ''; }
+                        setTimeout(() => goTo('s-home'), 3200);
+                    }, 200);
+                }
+            }, () => { pinSetupBuf = []; updateDots('pin-setup-dots', pinSetupBuf); document.getElementById('pin-setup-hint').textContent = 'Choose a 4-digit PIN'; });
+        }
+        function initPinEntry() {
+            pinEntryBuf = [];
+            if (appState.name) document.getElementById('pin-entry-name').textContent = 'Hi ' + appState.name + ' — enter your PIN';
+            document.getElementById('pin-entry-error').textContent = '';
+            buildPinPad('pin-pad-entry', l => {
+                if (pinEntryBuf.length < 4) pinEntryBuf.push(l);
+                updateDots('pin-entry-dots', pinEntryBuf);
+                if (pinEntryBuf.length === 4) {
+                    setTimeout(() => {
+                        if (pinEntryBuf.join('') === appState.pin) { goTo('s-home'); }
+                        else { document.getElementById('pin-entry-error').textContent = 'Incorrect PIN. Try again.'; pinEntryBuf = []; updateDots('pin-entry-dots', pinEntryBuf); }
+                    }, 200);
+                }
+            }, () => { pinEntryBuf = []; updateDots('pin-entry-dots', pinEntryBuf); document.getElementById('pin-entry-error').textContent = ''; });
+        }
+        function initPinChange() {
+            pinChangeBuf = []; let step2 = 0;
+            document.getElementById('pin-change-hint').textContent = 'Enter your current 4-digit PIN';
+            document.getElementById('pin-change-error').textContent = '';
+            buildPinPad('pin-pad-change', l => {
+                if (pinChangeBuf.length < 4) pinChangeBuf.push(l);
+                updateDots('pin-change-dots', pinChangeBuf);
+                if (pinChangeBuf.length === 4) {
+                    setTimeout(() => {
+                        if (step2 === 0) {
+                            if (pinChangeBuf.join('') === appState.pin) { pinChangeBuf = []; step2 = 1; updateDots('pin-change-dots', []); document.getElementById('pin-change-hint').textContent = 'Enter your new PIN'; document.getElementById('pin-change-error').textContent = ''; }
+                            else { document.getElementById('pin-change-error').textContent = 'Incorrect PIN.'; pinChangeBuf = []; updateDots('pin-change-dots', []); }
+                        } else { appState.pin = pinChangeBuf.join(''); saveState(); showToast('PIN updated!'); goTo('s-settings'); }
+                    }, 200);
+                }
+            }, () => { pinChangeBuf = []; updateDots('pin-change-dots', pinChangeBuf); });
+        }
+
+        // ── HOME ──
+        const phases = ['Menstrual', 'Follicular', 'Ovulation', 'Luteal'];
+        const phaseDots = ['#E91E8C', '#60A5FA', '#FCD34D', '#A78BFA'];
+        const moods = [
+            { name: 'Happy', color: '#22C55E', emoji: '😊' },
+            { name: 'Calm', color: '#0EA5E9', emoji: '😌' },
+            { name: 'Tired', color: '#94A3B8', emoji: '😴' },
+            { name: 'Anxious', color: '#F59E0B', emoji: '😟' },
+            { name: 'Pain', color: '#EF4444', emoji: '😣' },
+        ];
+        const tips = [
+            { img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&q=70', bg: '#FCE4EC', badge: 'Exercise', badgeColor: '#E91E8C', title: 'Light yoga reduces cramps' },
+            { img: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=300&q=70', bg: '#E3F2FD', badge: 'Hydration', badgeColor: '#1565C0', title: '8+ glasses reduces bloating' },
+            { img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&q=70', bg: '#E8F5E9', badge: 'Nutrition', badgeColor: '#2E7D32', title: 'Iron-rich foods during period' },
+            { img: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=300&q=70', bg: '#EDE7F6', badge: 'Sleep', badgeColor: '#6A1B9A', title: '7–9 hours support hormones' },
+        ];
+        const memEmojis = ['🌸', '⭐', '🌙', '💎', '🌺', '🦋', '🌈', '✨'];
+
+        function renderHome() {
+            const h = new Date().getHours();
+            document.getElementById('home-time-greeting').textContent = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+            document.getElementById('home-name').textContent = appState.name || 'there';
+            const lp = appState.lastPeriod ? new Date(appState.lastPeriod) : null;
+            const cl = appState.cycleLength || 28;
+            const today = new Date();
+            let cycleDay = 1, daysLeft = cl;
+            if (lp) { const diff = Math.floor((today - lp) / 864e5); cycleDay = (diff % cl) + 1; daysLeft = cl - cycleDay + 1; }
+            document.getElementById('home-cycle-day').textContent = cycleDay;
+            document.getElementById('home-next-period').innerHTML = `Next period in <strong>${daysLeft} day${daysLeft !== 1 ? 's' : ''}</strong>`;
+            const prog = document.getElementById('home-ring-progress');
+            const circ = 2 * Math.PI * 65; prog.setAttribute('stroke-dasharray', circ); prog.setAttribute('stroke-dashoffset', circ * (1 - cycleDay / cl));
+            document.getElementById('stat-cycle-len').textContent = cl;
+            document.getElementById('stat-days-left').textContent = daysLeft;
+            const phaseIdx = cycleDay <= 5 ? 0 : cycleDay <= 13 ? 1 : cycleDay <= 16 ? 2 : 3;
+            const phaseShorts = ['MEN', 'FOL', 'OVU', 'LUT'];
+            document.getElementById('stat-phase-short').textContent = phaseShorts[phaseIdx];
+            document.getElementById('phase-row').innerHTML = phases.map((p, i) =>
+                `<div class="phase-chip${i === phaseIdx ? ' active' : ''}">
+      <span class="phase-dot" style="background:${phaseDots[i]}"></span>${p}
+    </div>`
+            ).join('');
+            // Chart
+            const chartEl = document.getElementById('mini-chart');
+            const barDays = ['M1', 'M2', 'M3', 'M4', 'M5', 'M6'];
+            const barH = [20, 35, 55, 90, 60, 30];
+            chartEl.innerHTML = barDays.map((d, i) =>
+                `<div class="chart-bar-wrap">
+      <div class="chart-bar ${barH[i] >= 80 ? 'high active-bar' : barH[i] >= 50 ? 'med' : 'low'}" style="height:${barH[i]}%"></div>
+      <span class="chart-lbl">${d}</span>
+    </div>`
+            ).join('');
+            // Moods
+            document.getElementById('mood-row').innerHTML = moods.map(m =>
+                `<button class="mood-btn" onclick="logMood('${m.name}',this)">
+      <div class="mood-icon-wrap">${m.emoji}</div>
+      <div class="mood-name">${m.name}</div>
+    </button>`
+            ).join('');
+            // Tips
+            document.getElementById('tip-scroll').innerHTML = tips.map(t =>
+                `<div class="tip-card">
+      <img class="tip-img" src="${t.img}" alt="${t.badge}" loading="lazy"/>
+      <div class="tip-body">
+        <span class="tip-badge" style="background:${t.bg};color:${t.badgeColor}">${t.badge}</span>
+        <div class="tip-title">${t.title}</div>
+      </div>
+    </div>`
+            ).join('');
+        }
+        function logMood(mood, el) {
+            document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+            el.classList.add('selected');
+            const today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            if (!appState.moods) appState.moods = [];
+            appState.moods.unshift({ date: today, mood });
+            if (appState.moods.length > 30) appState.moods.pop();
+            saveState(); showToast('Mood logged: ' + mood);
+        }
+
+        // ── FULL CALENDAR ──
+        function renderFullCalendar() {
+            const today = new Date();
+            if (!fullCalState.year) fullCalState = { year: today.getFullYear(), month: today.getMonth() };
+            const cb = d => {
+                appState.lastPeriod = d.toISOString().split('T')[0]; saveState();
+                showToast('Period date updated');
+                renderCal('full-calendar', fullCalState, cb);
+            };
+            renderCal('full-calendar', fullCalState, cb);
+            renderUpcoming();
+        }
+        function renderUpcoming() {
+            const lp = appState.lastPeriod; const cl = appState.cycleLength || 28;
+            const up = document.getElementById('upcoming-list');
+            if (!lp) { up.innerHTML = '<p style="color:var(--text3);font-size:14px;font-weight:500">No period date set yet.</p>'; return; }
+            const np = new Date(lp); np.setDate(np.getDate() + cl);
+            const ov = new Date(lp); ov.setDate(ov.getDate() + (cl - 14));
+            const fs = new Date(lp); fs.setDate(fs.getDate() + (cl - 17));
+            const items = [
+                { label: 'Next Period', date: np, bg: '#FCE4EC', color: 'var(--rose2)', icon: 'water_drop' },
+                { label: 'Ovulation Day', date: ov, bg: '#FFF9C4', color: '#F57F17', icon: 'flare' },
+                { label: 'Fertile Window', date: fs, bg: '#E0F2F1', color: 'var(--sage)', icon: 'eco' },
+            ];
+            up.innerHTML = items.map(it =>
+                `<div class="upcoming-item">
+      <div class="upcoming-left">
+        <div class="upcoming-icon" style="background:${it.bg}">
+          <span class="material-icons-round" style="color:${it.color};font-size:18px">${it.icon}</span>
+        </div>
+        <span class="upcoming-lbl">${it.label}</span>
+      </div>
+      <span class="upcoming-date">${it.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+    </div>`
+            ).join('');
+        }
+
+        // ── INSIGHTS ──
+        function renderInsights() {
+            const lp = appState.lastPeriod ? new Date(appState.lastPeriod) : null;
+            const cl = appState.cycleLength || 28;
+            const today = new Date();
+            let cycleDay = lp ? Math.floor((today - lp) / 864e5) % cl + 1 : '—';
+            const moodData = appState.moods ? appState.moods.slice(0, 7) : [];
+            const moodColors = { Happy: '#22C55E', Calm: '#0EA5E9', Tired: '#94A3B8', Anxious: '#F59E0B', Pain: '#EF4444' };
+            document.getElementById('insights-content').innerHTML = `
+    <div class="insight-grid">
+      <div class="ins-card"><div class="ins-num">${cycleDay}</div><div class="ins-lbl">Cycle Day</div></div>
+      <div class="ins-card"><div class="ins-num">${cl}</div><div class="ins-lbl">Avg. Length</div></div>
+    </div>
+    <div class="mood-hist-card">
+      <div class="mood-hist-title">Recent Moods</div>
+      ${moodData.length === 0 ? '<p style="font-size:13px;color:var(--text3);font-weight:500">Track mood daily from the home screen.</p>' :
+                    moodData.map(m => `<div class="mood-row-item">
+          <span style="font-size:13px;font-weight:600;color:var(--text)">${m.date}</span>
+          <span class="mood-badge" style="background:${(moodColors[m.mood] || 'var(--rose)')}22;color:${moodColors[m.mood] || 'var(--rose2)'}">${m.mood}</span>
+        </div>`).join('')}
+    </div>
+    <div style="background:white;border-radius:20px;padding:20px;margin-top:16px;box-shadow:var(--shadow2)">
+      <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:8px">
+        <span class="material-icons-round" style="color:var(--rose2);font-size:20px">lightbulb</span>Wellness Note
+      </div>
+      <p style="font-size:13px;color:var(--text2);line-height:1.8;font-weight:400">Every cycle is unique. Track consistently for better predictions. Stay hydrated and rest when your body needs it. 💖</p>
+    </div>`;
+        }
+
+        // ── SETTINGS ──
+        function renderSettings() {
+            document.getElementById('settings-name').textContent = appState.name || 'User';
+            if (appState.dob) {
+                const age = Math.floor((new Date() - new Date(appState.dob)) / 3.156e10);
+                document.getElementById('settings-age').textContent = `Age ${age}`;
+            }
+            document.getElementById('settings-cycle-len').textContent = (appState.cycleLength || 28) + ' days';
+        }
+        function clearData() {
+            if (confirm('Are you sure? This will delete all your LunaFlow data.')) {
+                localStorage.removeItem(APP_KEY);
+                appState = { name: '', dob: '', cycleLength: 28, lastPeriod: null, pin: '', moods: [], setupComplete: false };
+                goTo('s-welcome'); showToast('All data cleared');
+            }
+        }
+
+        // ── BUBBLE POP ──
+        let bubbleScore = 0;
+        function resetBubbles() {
+            bubbleScore = 0; document.getElementById('bubble-score').textContent = '0';
+            const grid = document.getElementById('bubble-grid'); const count = 30;
+            document.getElementById('bubble-remaining').textContent = count;
+            grid.innerHTML = ''; let rem = count;
+            for (let i = 0; i < count; i++) {
+                const btn = document.createElement('button'); btn.className = 'bubble';
+                btn.textContent = '🫧'; btn.setAttribute('aria-label', 'Pop bubble');
+                btn.onclick = function () {
+                    if (!this.classList.contains('popped')) {
+                        this.classList.add('popped'); bubbleScore++; rem--;
+                        document.getElementById('bubble-score').textContent = bubbleScore;
+                        document.getElementById('bubble-remaining').textContent = rem;
+                        if (rem === 0) setTimeout(() => showToast('All popped! Score: ' + bubbleScore), 300);
+                    }
+                };
+                grid.appendChild(btn);
+            }
+        }
+
+        // ── MEMORY ──
+        let memFlipped = [], memMatched = 0, memMoves = 0, memLocked = false;
+        function resetMemory() {
+            memFlipped = []; memMatched = 0; memMoves = 0; memLocked = false;
+            document.getElementById('mem-moves').textContent = '0';
+            document.getElementById('mem-pairs').textContent = '0/8';
+            const cards = [...memEmojis, ...memEmojis].sort(() => Math.random() - .5);
+            const grid = document.getElementById('memory-grid'); grid.innerHTML = '';
+            cards.forEach((sym, i) => {
+                const card = document.createElement('div'); card.className = 'mem-card'; card.dataset.sym = i % memEmojis.length;
+                card.setAttribute('role', 'button'); card.setAttribute('aria-label', 'Memory card');
+                card.innerHTML = `<div class="mem-back">?</div><div class="mem-front">${sym}</div>`;
+                card.onclick = function () { flipCard(this); };
+                grid.appendChild(card);
+            });
+        }
+        function flipCard(card) {
+            if (memLocked || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+            card.classList.add('flipped'); memFlipped.push(card);
+            if (memFlipped.length === 2) {
+                memLocked = true; memMoves++;
+                document.getElementById('mem-moves').textContent = memMoves;
+                if (memFlipped[0].dataset.sym === memFlipped[1].dataset.sym) {
+                    memFlipped.forEach(c => c.classList.add('matched')); memMatched++;
+                    document.getElementById('mem-pairs').textContent = memMatched + '/8';
+                    memFlipped = []; memLocked = false;
+                    if (memMatched === 8) setTimeout(() => showToast('All pairs matched in ' + memMoves + ' moves!'), 300);
+                } else {
+                    setTimeout(() => { memFlipped.forEach(c => c.classList.remove('flipped')); memFlipped = []; memLocked = false; }, 900);
+                }
+            }
+        }
+
+        // ── BREATHING ──
+        let breathPhase = 'idle', breathTimer = null;
+        function startBreath() {
+            if (breathPhase !== 'idle') return; breathPhase = 'running';
+            const circle = document.getElementById('breath-circle');
+            const label = document.getElementById('breath-label');
+            const count = document.getElementById('breath-count');
+            const seq = [{ label: 'Breathe In', seconds: 4, cls: 'inhale' }, { label: 'Hold', seconds: 4, cls: '' }, { label: 'Breathe Out', seconds: 4, cls: 'exhale' }, { label: 'Rest', seconds: 2, cls: '' }];
+            let si = 0, sc = seq[0].seconds; circle.innerHTML = '';
+            breathTimer = setInterval(() => {
+                const step = seq[si]; label.textContent = step.label; count.textContent = sc;
+                circle.className = 'breath-circle ' + (step.cls || ''); sc--;
+                if (sc < 0) { si = (si + 1) % seq.length; sc = seq[si].seconds; }
+            }, 1000);
+        }
+
+        // ── INIT ──
+        function init() {
+            const has = loadState();
+            if (has && appState.setupComplete && appState.pin) goTo('s-pin-entry-existing');
+            else goTo('s-welcome');
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => setTimeout(init, 50));
+        } else {
+            setTimeout(init, 50);
+        }
+    </script>
+</body>
+
+</html>
