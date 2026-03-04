@@ -7,8 +7,22 @@
     <meta name="theme-color" content="#E91E8C" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="LunaFlow" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="LunaFlow" />
+    <meta name="description" content="Your private, calm space for cycle tracking and wellness" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="./manifest.json" />
+
+    <!-- iOS home screen icons -->
+    <link rel="apple-touch-icon" href="./icons/icon-192x192.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="./icons/icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./icons/icon-192x192.png" />
+    <link rel="apple-touch-startup-image" href="./icons/icon-512x512.png" />
+
     <title>LunaFlow</title>
-    <link rel="icon" type="image/jpge" href="./Logol.png">
+    <link rel="icon" type="image/png" href="./icons/icon-192x192.png">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -2438,7 +2452,6 @@
 
     <!-- ██ HOME ██ -->
     <div id="s-home" class="screen">
-        <!-- Header with background image -->
         <div class="home-hdr">
             <img class="home-hdr-img" src="https://images.unsplash.com/photo-1536514498073-50e69d39c6cf?w=800&q=80"
                 alt="wellness background" loading="lazy" />
@@ -2467,7 +2480,6 @@
             <div class="ring-sub" id="home-next-period">Next period in <strong>— days</strong></div>
         </div>
 
-        <!-- Stats -->
         <div class="stats-row">
             <div class="stat-card">
                 <div class="stat-num" id="stat-cycle-len">28</div>
@@ -2483,13 +2495,11 @@
             </div>
         </div>
 
-        <!-- Phase -->
         <div class="sec-hdr">
             <div class="sec-title">Current Phase</div>
         </div>
         <div class="phase-scroll" id="phase-row"></div>
 
-        <!-- Featured tip -->
         <div class="sec-hdr">
             <div class="sec-title">Today's Focus</div><button class="sec-link">See All</button>
         </div>
@@ -2504,7 +2514,6 @@
             </div>
         </div>
 
-        <!-- Prediction chart -->
         <div class="sec-hdr">
             <div class="sec-title">Cycle Forecast</div><button class="sec-link" onclick="goTo('s-calendar-full')">View
                 All</button>
@@ -2515,7 +2524,6 @@
             <div class="mini-chart" id="mini-chart"></div>
         </div>
 
-        <!-- Analysis -->
         <div class="sec-hdr">
             <div class="sec-title">Symptom Analysis</div><button class="sec-link"
                 onclick="goTo('s-insights')">Details</button>
@@ -2556,19 +2564,16 @@
             </div>
         </div>
 
-        <!-- Mood -->
         <div class="sec-hdr">
             <div class="sec-title">How are you feeling?</div>
         </div>
         <div class="mood-row" id="mood-row"></div>
 
-        <!-- Tips -->
         <div class="sec-hdr">
             <div class="sec-title">Wellness Tips</div><button class="sec-link">See All</button>
         </div>
         <div class="tip-scroll" id="tip-scroll"></div>
 
-        <!-- Relaxation -->
         <div class="sec-hdr">
             <div class="sec-title">Relaxation</div>
         </div>
@@ -2604,7 +2609,6 @@
             </div>
         </div>
 
-        <!-- Bottom Nav -->
         <nav class="bottom-nav">
             <button class="nav-item active" onclick="showTab(this)" id="nav-home">
                 <span class="material-icons-round">home</span>
@@ -2855,13 +2859,18 @@
     <!-- TOAST -->
     <div class="toast" id="toast" role="alert" aria-live="polite"></div>
 
-    <script>
-        // ── INIT ICONS CHECK ──
-        function tryIcons() { /* icons are CSS-based via Google Fonts — no init needed */ }
+    <!-- ██ PWA INSTALL MANAGER ██ -->
+    <!-- Must load BEFORE the app's init() so beforeinstallprompt is never missed -->
+    <script src="./pwa-install.js"></script>
 
-        // ── PWA ──
+    <script>
+        // ── PWA Service Worker ──
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => { }));
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('[SW] Registered:', reg.scope))
+                    .catch(err => console.warn('[SW] Registration failed:', err));
+            });
         }
 
         // ── STATE ──
@@ -3123,7 +3132,6 @@
       <span class="phase-dot" style="background:${phaseDots[i]}"></span>${p}
     </div>`
             ).join('');
-            // Chart
             const chartEl = document.getElementById('mini-chart');
             const barDays = ['M1', 'M2', 'M3', 'M4', 'M5', 'M6'];
             const barH = [20, 35, 55, 90, 60, 30];
@@ -3133,14 +3141,12 @@
       <span class="chart-lbl">${d}</span>
     </div>`
             ).join('');
-            // Moods
             document.getElementById('mood-row').innerHTML = moods.map(m =>
                 `<button class="mood-btn" onclick="logMood('${m.name}',this)">
       <div class="mood-icon-wrap">${m.emoji}</div>
       <div class="mood-name">${m.name}</div>
     </button>`
             ).join('');
-            // Tips
             document.getElementById('tip-scroll').innerHTML = tips.map(t =>
                 `<div class="tip-card">
       <img class="tip-img" src="${t.img}" alt="${t.badge}" loading="lazy"/>
