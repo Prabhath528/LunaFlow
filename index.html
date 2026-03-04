@@ -3,7 +3,7 @@
 
 <head>
     <!-- PWA Install Manager — must be FIRST to capture beforeinstallprompt -->
-    <script src="./pwa-install.js"></script>
+    <script src="/pwa-install.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover" />
 
@@ -20,20 +20,20 @@
 
     <!-- Windows / Edge -->
     <meta name="msapplication-TileColor" content="#E91E8C" />
-    <meta name="msapplication-TileImage" content="./icons/icon-144x144.png" />
-    <meta name="msapplication-starturl" content="./index.html" />
+    <meta name="msapplication-TileImage" content="/icons/icon-144x144.png" />
+    <meta name="msapplication-starturl" content="/index.html" />
 
     <!-- PWA Manifest (tells browser: open as separate window) -->
-    <link rel="manifest" href="./manifest.json" />
+    <link rel="manifest" href="/manifest.json" />
 
     <!-- iOS home-screen & splash icons -->
-    <link rel="apple-touch-icon"             href="./icons/icon-192x192.png" />
-    <link rel="apple-touch-icon" sizes="152x152" href="./icons/icon-152x152.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="./icons/icon-192x192.png" />
-    <link rel="apple-touch-startup-image"    href="./icons/icon-512x512.png" />
+    <link rel="apple-touch-icon"             href="/icons/icon-192x192.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png" />
+    <link rel="apple-touch-startup-image"    href="/icons/icon-512x512.png" />
 
     <title>LunaFlow</title>
-    <link rel="icon" type="image/png" href="./icons/icon-192x192.png">
+    <link rel="icon" type="image/png" href="/icons/icon-192x192.png">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -2872,10 +2872,11 @@
 
     <script>
         // ── PWA Service Worker ──────────────────────────────
+        // FIX: Register SW from root scope using absolute path
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js', { scope: '/' }).then(reg => {
-                    console.log('[SW] Registered:', reg.scope);
+                    console.log('[SW] Registered scope:', reg.scope);
                     reg.addEventListener('updatefound', () => {
                         const nw = reg.installing;
                         nw.addEventListener('statechange', () => {
@@ -2884,13 +2885,15 @@
                             }
                         });
                     });
-                }).catch(err => console.warn('[SW] Failed:', err));
+                }).catch(err => console.warn('[SW] Registration failed:', err));
+
                 let refreshing = false;
                 navigator.serviceWorker.addEventListener('controllerchange', () => {
                     if (!refreshing) { refreshing = true; window.location.reload(); }
                 });
             });
         }
+
         if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
             document.documentElement.classList.add('pwa-standalone');
         }
